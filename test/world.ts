@@ -110,7 +110,7 @@ export async function world(
       wait: async (state): Promise<CallbackResult> => {
         // The browser's redirect, answered by the real request handler.
         const answer = handleCallback(`/callback?${callback.query(state)}`, state);
-        return answer.result ?? { error: "state mismatch" };
+        return answer.result ?? { error: "timed out waiting for the browser" };
       },
       close: () => {
         callback.closed += 1;

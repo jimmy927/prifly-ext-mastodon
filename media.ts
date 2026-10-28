@@ -29,7 +29,7 @@ async function loadImage(ctx: Ctx, entry: unknown): Promise<Image> {
   }
   const alt = typeof item.alt === "string" && item.alt.trim() !== "" ? item.alt.trim() : undefined;
   const file = await ctx.deps.readFile(item.path);
-  if (!/^(image|video|audio)\//.test(file.type)) {
+  if (!/^image\//.test(file.type)) {
     throw new UserError(
       `${item.path} is not an image Mastodon accepts (type ${file.type || "unknown"}).`,
     );

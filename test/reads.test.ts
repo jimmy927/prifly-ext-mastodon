@@ -216,3 +216,12 @@ test("search lists accounts, posts and hashtags, or says nothing was found", asy
     'Nothing found for "zzz".',
   );
 });
+
+test("a display name with an out-of-range entity or tags renders as typed", async () => {
+  const w = await world({ signedIn: true });
+  const odd = account({ display_name: "&#1114112; <b>x</b> &#xD800;" }) as never;
+  w.routes.set("GET /api/v1/timelines/home", json([status("1", { account: odd })]));
+  const out = await w.fake.callTool("mastodon_timeline", {});
+  expect(out).toContain("**&#1114112; <b>x</b> &#xD800; (@ada@other.test)**");
+  expect(out).toContain("Hello world");
+});

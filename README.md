@@ -23,18 +23,18 @@ Mastodon instance and uses Mastodon's official REST API only.
 
 ## Tools
 
-| Tool | What it does | Asks first |
-|---|---|---|
-| `mastodon_sign_in(server)` | OAuth sign-in in your browser | no (you approve in the browser) |
-| `mastodon_sign_out` | Revokes the token and removes the saved copy | no |
-| `mastodon_timeline` | Home, local or federated; `limit`, `max_id`, `since_id` | no |
-| `mastodon_notifications` | Paged with `max_id` | no |
-| `mastodon_thread` | A status (URL on any server, or id) with ancestors and replies | no |
-| `mastodon_profile` | `@user@host`, id, URL, or you; plus recent posts | no |
-| `mastodon_search` | Accounts, posts and hashtags | no |
-| `mastodon_post` | Text, `visibility`, `spoiler_text`, up to 4 images | card |
-| `mastodon_reply` | Reply by URL or id; parent's visibility, `@mentions` added | card |
-| `mastodon_dm` | Direct message to `@user@host` | card |
+| Tool                       | What it does                                                   | Asks first                      |
+| -------------------------- | -------------------------------------------------------------- | ------------------------------- |
+| `mastodon_sign_in(server)` | OAuth sign-in in your browser                                  | no (you approve in the browser) |
+| `mastodon_sign_out`        | Revokes the token and removes the saved copy                   | no                              |
+| `mastodon_timeline`        | Home, local or federated; `limit`, `max_id`, `since_id`        | no                              |
+| `mastodon_notifications`   | Paged with `max_id`                                            | no                              |
+| `mastodon_thread`          | A status (URL on any server, or id) with ancestors and replies | no                              |
+| `mastodon_profile`         | `@user@host`, id, URL, or you; plus recent posts               | no                              |
+| `mastodon_search`          | Accounts, posts and hashtags                                   | no                              |
+| `mastodon_post`            | Text, `visibility`, `spoiler_text`, up to 4 images             | card                            |
+| `mastodon_reply`           | Reply by URL or id; parent's visibility, `@mentions` added     | card                            |
+| `mastodon_dm`              | Direct message to `@user@host`                                 | card                            |
 
 Statuses are shown as Markdown: author, time, URL, plain text (HTML removed),
 content warning, media with alt text, and counts.
@@ -71,16 +71,16 @@ bun run typecheck
 bun run check      # biome
 ```
 
-| File | What it is |
-|---|---|
-| `prifly-extension.json`, `prompt.md` | Manifest; the session instructions |
-| `index.ts` | `activate(api)` registers the tools; `activateWith(api, deps)` for tests |
-| `deps.ts` | The seams: `fetch`, browser opener, loopback server, file reader |
-| `client.ts` | Requests: unreachable, 401, 429 and rate-limit handling |
-| `store.ts` | The account and per-server app, in `api.secrets` |
-| `auth-tools.ts` | Sign-in and sign-out |
-| `read-tools.ts`, `write-tools.ts`, `media.ts` | The reads; the confirmed writes; image upload with the 202 poll |
-| `render.ts`, `resolve.ts`, `tool.ts` | Markdown rendering; URL/id resolution; tool helpers |
-| `test/world.ts` | A fake Mastodon server, browser, loopback callback, disk and `api.secrets` |
+| File                                          | What it is                                                                 |
+| --------------------------------------------- | -------------------------------------------------------------------------- |
+| `prifly-extension.json`, `prompt.md`          | Manifest; the session instructions                                         |
+| `index.ts`                                    | `activate(api)` registers the tools; `activateWith(api, deps)` for tests   |
+| `deps.ts`                                     | The seams: `fetch`, browser opener, loopback server, file reader           |
+| `client.ts`                                   | Requests: unreachable, 401, 429 and rate-limit handling                    |
+| `store.ts`                                    | The account and per-server app, in `api.secrets`                           |
+| `auth-tools.ts`                               | Sign-in and sign-out                                                       |
+| `read-tools.ts`, `write-tools.ts`, `media.ts` | The reads; the confirmed writes; image upload with the 202 poll            |
+| `render.ts`, `resolve.ts`, `tool.ts`          | Markdown rendering; URL/id resolution; tool helpers                        |
+| `test/world.ts`                               | A fake Mastodon server, browser, loopback callback, disk and `api.secrets` |
 
 MIT licensed.

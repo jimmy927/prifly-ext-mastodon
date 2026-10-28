@@ -13,10 +13,13 @@ const ENTITIES: Record<string, string> = {
 
 function decode(text: string): string {
   return text.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (whole, name: string) => {
-    if (name.startsWith("#x") || name.startsWith("#X")) {
-      return String.fromCodePoint(Number.parseInt(name.slice(2), 16));
+    const hex = name.startsWith("#x") || name.startsWith("#X");
+    if (name.startsWith("#")) {
+      const code = Number.parseInt(name.slice(hex ? 2 : 1), hex ? 16 : 10);
+      // A code point fromCodePoint would throw on stays as typed.
+      const valid = code <= 0x10ffff && !(code >= 0xd800 && code <= 0xdfff);
+      return valid ? String.fromCodePoint(code) : whole;
     }
-    if (name.startsWith("#")) return String.fromCodePoint(Number.parseInt(name.slice(1), 10));
     return ENTITIES[name.toLowerCase()] ?? whole;
   });
 }
@@ -41,7 +44,7 @@ export function when(iso: string): string {
 }
 
 export function who(account: Account): string {
-  const name = htmlToText(account.display_name ?? "").trim();
+  const name = (account.display_name ?? "").trim();
   return name === "" ? `@${account.acct}` : `${name} (@${account.acct})`;
 }
 

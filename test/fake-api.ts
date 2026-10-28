@@ -9,6 +9,8 @@
  *     const fake = fakeApi({ connections: fakeConnections({ accounts: [ACCOUNT], provider }) });
  *     activate(fake.api);
  *     expect(await fake.callTool("my_tool", {})).toBe("…");
+ *
+ * Changed from the template's copy: its `git` line is removed (the pinned extension-api has no `api.git`).
  */
 
 import { mkdtempSync } from "node:fs";

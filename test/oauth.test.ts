@@ -102,7 +102,7 @@ test("a redirect with an error or the wrong state signs nothing in", async () =>
   );
   w.callback.query = () => "code=stolen&state=someone-else";
   expect(await w.fake.callTool("mastodon_sign_in", { server: "masto.test" })).toContain(
-    "state mismatch",
+    "timed out waiting for the browser",
   );
   expect(w.requests("POST /oauth/token")).toHaveLength(0);
   expect(w.secrets.has("account")).toBe(false);

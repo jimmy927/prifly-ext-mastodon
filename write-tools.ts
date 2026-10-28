@@ -141,7 +141,8 @@ function post(ctx: Ctx): ExtensionTool {
         spoiler_text: spoilerProp,
         in_reply_to_id: {
           type: "string",
-          description: "Id of a status on the reader's server to reply to (prefer mastodon_reply).",
+          description:
+            "Id of a status on the reader's server to reply to (prefer mastodon_reply: this adds no @mentions and does not copy the parent's content warning).",
         },
         images: imagesProp,
       },
