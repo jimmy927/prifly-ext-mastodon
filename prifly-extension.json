@@ -1,0 +1,8 @@
+{
+  "id": "mastodon",
+  "name": "Mastodon",
+  "description": "Mastodon in prifly: sign in to your own server in the browser, read your timeline, notifications, threads, profiles and search, and post, reply or DM after you confirm a card.",
+  "version": "0.1.0",
+  "main": "index.ts",
+  "prompt": "prompt.md"
+}

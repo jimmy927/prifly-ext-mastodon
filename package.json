@@ -1,0 +1,18 @@
+{
+  "name": "prifly-ext-mastodon",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "description": "A prifly extension: read your Mastodon timeline, notifications, threads, profiles and search, and post, reply or DM after confirming a card.",
+  "scripts": {
+    "test": "bun test",
+    "typecheck": "tsc --noEmit",
+    "check": "biome check ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.14",
+    "@prifly/extension-api": "git+ssh://git@github.com/jimmy927/prifly-extension-api.git#v0.8.0",
+    "@types/bun": "^1.1.14",
+    "typescript": "^7.0.2"
+  }
+}
