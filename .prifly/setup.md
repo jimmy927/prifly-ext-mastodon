@@ -12,5 +12,5 @@ install while there is no `package.json`; once the extension lands, it installs 
 
 Relies on, outside the worktree:
 - `bun` on PATH.
-- The reader's GitHub ssh key: `@prifly/extension-api` is a git dependency on the private
-  mirror `jimmy927/prifly-extension-api`, fetched over ssh at a `v<version>` tag.
+- Network access to github.com: `@prifly/extension-api` is a git dependency on the public
+  repository `jimmy927/prifly-extension-api`, fetched at a `v<version>` tag. No ssh key is needed.
