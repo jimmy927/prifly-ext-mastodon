@@ -1,4 +1,5 @@
 import { expect, test } from "bun:test";
+import type { CardSpec } from "../types";
 import { account, json, status, world } from "./world";
 
 const PNG = { bytes: new Uint8Array([137, 80, 78, 71, 1, 2, 3]), type: "image/png" };
@@ -26,6 +27,7 @@ test("post: the card shows the exact text, visibility and CW, and Confirm sends 
   expect(card?.details).toContain("Content warning: greetings");
   expect(card?.details).toContain("Account: @me on masto.test");
   expect(card?.details).toContain("Images: none");
+  expect(card).not.toHaveProperty("images");
   const sent = w.requests("POST /api/v1/statuses");
   expect(sent).toHaveLength(1);
   expect(sentJson(sent[0]?.body)).toEqual({
@@ -73,6 +75,11 @@ test("post: images are uploaded after Confirm, polling a 202 until processed, th
   expect(card?.summary).toContain("2 images");
   expect(card?.details).toContain("Image 1: /pics/a.png (image/png, 7 bytes), alt text: first");
   expect(card?.details).toContain("Image 2: /pics/b.png (image/png, 7 bytes), alt text: none");
+  // One picture per image, in order, named by its alt text or else its file name.
+  expect((card as CardSpec | undefined)?.images).toEqual([
+    { mimeType: "image/png", bytes: PNG.bytes, name: "first" },
+    { mimeType: "image/png", bytes: PNG.bytes, name: "b.png" },
+  ]);
   const uploads = w.requests("POST /api/v2/media");
   expect(uploads).toHaveLength(2);
   const descriptions = uploads.map((each) => (each.body as FormData).get("description"));

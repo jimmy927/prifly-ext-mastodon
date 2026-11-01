@@ -1,5 +1,17 @@
 /** The parts of Mastodon's REST entities this extension reads. */
 
+import type { ConfirmSpec } from "@prifly/extension-api";
+
+/** A picture shown on a confirm card. */
+export type CardImage = { mimeType: string; bytes: Uint8Array; name?: string };
+
+/**
+ * A confirm card with `images` (drawn on the card), which the published
+ * `@prifly/extension-api` does not declare yet. A prifly that does not know
+ * the field ignores it.
+ */
+export type CardSpec = ConfirmSpec & { images?: CardImage[] };
+
 export type Account = {
   id: string;
   username: string;

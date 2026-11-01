@@ -15,6 +15,8 @@ import { type Ctx, requireAccount } from "./store";
 import { type Args, defineTool, optEnum, optStr, postText } from "./tool";
 import {
   type Account,
+  type CardImage,
+  type CardSpec,
   type Status,
   type StoredAccount,
   VISIBILITIES,
@@ -80,18 +82,27 @@ function describe(draft: Draft, account: StoredAccount): { summary: string; deta
   };
 }
 
+/** An image as the card draws it, named by its alt text when it has one. */
+const cardImage = (image: Image): CardImage => ({
+  mimeType: image.file.type,
+  bytes: image.file.bytes,
+  name: image.alt ?? image.file.name,
+});
+
 /** Asks, and only on Confirm uploads the images and posts. */
 async function send(ctx: Ctx, account: StoredAccount, draft: Draft): Promise<string> {
   const api = ctx.api();
   if (api?.confirm === undefined)
     return "Not done: this prifly cannot ask you first. Update prifly.";
   const { summary, details } = describe(draft, account);
-  const yes = await api.confirm({
+  const card: CardSpec = {
     title: TITLES[draft.kind],
     summary,
     content: draft.text,
     details,
-  });
+  };
+  if (draft.images.length > 0) card.images = draft.images.map(cardImage);
+  const yes = await api.confirm(card);
   if (!yes) return CANCELLED;
   const mediaIds: string[] = [];
   for (const image of draft.images) mediaIds.push(await uploadImage(ctx, account, image));
